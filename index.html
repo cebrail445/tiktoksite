@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TokSave.io - TikTok Videolarını Filigransız MP4 Olarak İndir</title>
+    <!-- Google AdSense Kodu -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4663578770758170"
+         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -353,11 +356,9 @@
             loader.classList.remove('hidden');
 
             try {
-                // server.js kodundaki GET /api/download?url=... yapısına istek atıyoruz
                 const response = await fetch(`${API_URL}?url=${encodeURIComponent(url)}`);
                 const jsonRes = await response.json();
 
-                // TikWM yapısına uyumlu kontrol (code === 0 başarılı demektir)
                 if (jsonRes && jsonRes.code === 0 && jsonRes.data) {
                     const data = jsonRes.data;
 
@@ -365,8 +366,8 @@
                     document.getElementById('authorName').innerText = data.author?.nickname ? `@${data.author.unique_id}` : '@tiktok_user';
                     document.getElementById('videoTitle').innerText = data.title || 'TikTok Videosu';
                     
-                    document.getElementById('mp4Link').href = data.play; // Filigransız MP4
-                    document.getElementById('mp3Link').href = data.music; // Arka plan müziği (MP3)
+                    document.getElementById('mp4Link').href = data.play; 
+                    document.getElementById('mp3Link').href = data.music; 
 
                     resultCard.classList.remove('hidden');
                 } else {
