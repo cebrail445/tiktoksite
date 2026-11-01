@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokSave.io - TikTok Videolarını Filigransız MP4 Olarak İndir</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: radial-gradient(circle at top, #1e1b4b 0%, #090d16 60%, #030712 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px;
+        }
+        header {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            background: #1e1b4b;
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid #4c1d95;
+        }
+        .logo i { color: #a855f7; font-size: 22px; }
+        .api-badge {
+            background: rgba(6, 95, 70, 0.4);
+            color: #34d399;
+            border: 1px solid rgba(52, 211, 153, 0.4);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        main {
+            max-width: 800px;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+            padding: 30px 0;
+        }
+        .sub-tag {
+            color: #c084fc;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        h1 {
+            font-size: 44px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            background: linear-gradient(180deg, #ffffff 40%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        p.desc {
+            color: #94a3b8;
+            font-size: 15px;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+        .input-box {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #334155;
+            padding: 10px;
+            border-radius: 18px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            margin-bottom: 50px;
+        }
+        .input-box input {
+            flex: 1;
+            background: #020617;
+            border: 1px solid #1e293b;
+            padding: 16px 20px;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+        .input-box input::placeholder { color: #64748b; }
+        .paste-btn {
+            background: #1e293b;
+            color: #cbd5e1;
+            border: none;
+            padding: 0 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+        .paste-btn:hover { background: #334155; }
+        .submit-btn {
+            background: linear-gradient(135deg, #9333ea, #7c3aed);
+            color: white;
+            border: none;
+            padding: 0 32px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 15px;
+            transition: 0.2s;
+            box-shadow: 0 4px 15px rgba(147, 51, 234, 0.4);
+        }
+        .submit-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* Özellik Kartları */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .feature-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid #1e293b;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .feature-card i {
+            font-size: 20px;
+            color: #c084fc;
+            margin-bottom: 12px;
+        }
+        .feature-card h3 {
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 6px;
+        }
+        .feature-card p {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.4;
+        }
+
+        /* Loader & Sonuç Kartı */
+        .hidden { display: none !important; }
+        .loader {
+            margin: 20px auto;
+            border: 4px solid #1e293b;
+            border-top: 4px solid #a855f7;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .result-card {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 25px;
+            display: flex;
+            gap: 20px;
+            text-align: left;
+            align-items: center;
+        }
+        .result-card img {
+            width: 110px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .result-info { flex: 1; }
+        .author-tag {
+            background: rgba(147, 51, 234, 0.2);
+            color: #d8b4fe;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .video-title {
+            font-size: 14px;
+            color: #e2e8f0;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .btn-group { display: flex; gap: 10px; }
+        .dl-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .mp4-btn { background: #059669; color: white; }
+        .mp4-btn:hover { background: #047857; }
+        .mp3-btn { background: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+        .mp3-btn:hover { background: #334155; }
+
+        footer {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #1e293b;
+            color: #64748b;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .features { grid-template-columns: 1fr; }
+            .input-box { flex-direction: column; }
+            h1 { font-size: 30px; }
+            .result-card { flex-direction: column; text-align: center; }
+            .result-card img { width: 100%; height: 200px; }
+            .btn-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fa-brands fa-tiktok"></i>
+            <span>TokSave.io</span>
+        </div>
+        <span class="api-badge"><i class="fa-solid fa-circle-check"></i> API Aktif</span>
+    </header>
+
+    <main>
+        <span class="sub-tag"><i class="fa-solid fa-bolt"></i> En Hızlı TikTok Video İndirici</span>
+        <h1>TikTok Videolarını<br>Filigransız MP4 Olarak İndir</h1>
+        <p class="desc">Herhangi bir TikTok bağlantısını aşağıya yapıştırın. Saniyeler içinde logosuz, yüksek kalitede video veya MP3 sesini ücretsiz indirin.</p>
+
+        <!-- Input Alanı -->
+        <div class="input-box">
+            <form id="downloadForm" style="display: flex; width: 100%; gap: 10px;">
+                <input type="url" id="tiktokUrl" required placeholder="TikTok video bağlantısını buraya yapıştırın...">
+                <button type="button" id="pasteBtn" class="paste-btn"><i class="fa-regular fa-clipboard"></i> Yapıştır</button>
+                <button type="submit" class="submit-btn"><i class="fa-solid fa-arrow-down"></i> İndir</button>
+            </form>
+        </div>
+
+        <!-- Loader -->
+        <div id="loader" class="loader hidden"></div>
+        
+        <!-- Hata Mesajı -->
+        <div id="errorMsg" class="hidden" style="background: rgba(127, 29, 29, 0.4); border: 1px solid #991b1b; color: #fca5a5; padding: 12px; border-radius: 10px; margin-bottom: 20px; font-size: 14px;"></div>
+
+        <!-- Sonuç Kartı -->
+        <div id="resultCard" class="result-card hidden">
+            <img id="videoCover" src="" alt="Video Kapak">
+            <div class="result-info">
+                <span id="authorName" class="author-tag">@kullanici</span>
+                <p id="videoTitle" class="video-title">Video Açıklaması</p>
+                <div class="btn-group">
+                    <a id="mp4Link" href="#" target="_blank" class="dl-btn mp4-btn"><i class="fa-solid fa-download"></i> Filigransız MP4</a>
+                    <a id="mp3Link" href="#" target="_blank" class="dl-btn mp3-btn"><i class="fa-solid fa-music"></i> Ses (MP3)</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alt Özellik Kartları -->
+        <div class="features">
+            <div class="feature-card">
+                <i class="fa-solid fa-bolt"></i>
+                <h3>Işık Hızında</h3>
+                <p>Node.js altyapımız ile videolar saniyeler içinde hazırlanır.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-ban"></i>
+                <h3>Filigransız (No-WM)</h3>
+                <p>TikTok logosu ve kullanıcı adı olmadan temiz video indirin.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h3>%100 Güvenli & Ücretsiz</h3>
+                <p>Üyelik veya kayıt gerekmez. Sınırsız ücretsiz indirme imkanı.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>TokSave.io • Tüm Hakları Saklıdır © 2026</p>
+        <p>Yasal Uyarı (Disclaimer): Bu web sitesinin TikTok veya ByteDance Ltd. ile hiçbir resmi bağı, ortaklığı veya sponsorluğu yoktur. Sitemiz sunucularında hiçbir video medya verisi barındırmaz ve depolamaz. Tüm medya içerikleri doğrudan TikTok sunucularından anlık olarak çekilir. Tüm telif hakları ilgili içerik sahibine aittir.</p>
+    </footer>
+
+    <script>
+        // Senin canlı Render API adresin
+        const API_URL = 'https://tiktokapi-ghsj.onrender.com/api/download';
+
+        const downloadForm = document.getElementById('downloadForm');
+        const tiktokUrlInput = document.getElementById('tiktokUrl');
+        const pasteBtn = document.getElementById('pasteBtn');
+        const loader = document.getElementById('loader');
+        const errorMsg = document.getElementById('errorMsg');
+        const resultCard = document.getElementById('resultCard');
+
+        // Panodan yapıştırma fonksiyonu
+        pasteBtn.addEventListener('click', async () => {
+            try {
+                const text = await navigator.clipboard.readText();
+                tiktokUrlInput.value = text;
+            } catch (err) {
+                alert('Panodan okuma izni alınamadı.');
+            }
+        });
+
+        // Form gönderildiğinde çalışacak kısım (GET isteği)
+        downloadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const url = tiktokUrlInput.value.trim();
+            if (!url) return;
+
+            errorMsg.classList.add('hidden');
+            resultCard.classList.add('hidden');
+            loader.classList.remove('hidden');
+
+            try {
+                // server.js kodundaki GET /api/download?url=... yapısına istek atıyoruz
+                const response = await fetch(`${API_URL}?url=${encodeURIComponent(url)}`);
+                const jsonRes = await response.json();
+
+                // TikWM yapısına uyumlu kontrol (code === 0 başarılı demektir)
+                if (jsonRes && jsonRes.code === 0 && jsonRes.data) {
+                    const data = jsonRes.data;
+
+                    document.getElementById('videoCover').src = data.cover || data.origin_cover || '';
+                    document.getElementById('authorName').innerText = data.author?.nickname ? `@${data.author.unique_id}` : '@tiktok_user';
+                    document.getElementById('videoTitle').innerText = data.title || 'TikTok Videosu';
+                    
+                    document.getElementById('mp4Link').href = data.play; // Filigransız MP4
+                    document.getElementById('mp3Link').href = data.music; // Arka plan müziği (MP3)
+
+                    resultCard.classList.remove('hidden');
+                } else {
+                    throw new Error(jsonRes.msg || 'Video bilgileri çekilemedi usta.');
+                }
+            } catch (err) {
+                errorMsg.innerText = 'Hata: ' + (err.message || 'Sunucuya ulaşılamadı.');
+                errorMsg.classList.remove('hidden');
+            } finally {
+                loader.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
