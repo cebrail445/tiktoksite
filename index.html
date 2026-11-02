@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TokSave.io - TikTok Videolarını Filigransız MP4 Olarak İndir</title>
+    <title id="metaTitle">TokSave.io - TikTok Videolarını Filigransız MP4 Olarak İndir</title>
     
     <!-- Google AdSense Kodu -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4663578770758170"
@@ -45,6 +45,11 @@
             align-items: center;
             padding: 20px 0;
         }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
         .logo {
             display: flex;
             align-items: center;
@@ -66,6 +71,16 @@
             border-radius: 20px;
             font-size: 12px;
             font-weight: 600;
+        }
+        .lang-select {
+            background: #0f172a;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            padding: 6px 10px;
+            border-radius: 12px;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
         }
         main {
             max-width: 800px;
@@ -275,20 +290,32 @@
             <i class="fa-brands fa-tiktok"></i>
             <span>TokSave.io</span>
         </div>
-        <span class="api-badge"><i class="fa-solid fa-circle-check"></i> API Aktif</span>
+        <div class="header-right">
+            <span class="api-badge" id="apiBadge"><i class="fa-solid fa-circle-check"></i> API Aktif</span>
+            <select id="langSelect" class="lang-select">
+                <option value="tr">TR 🇹🇷</option>
+                <option value="en">EN 🇺🇸</option>
+                <option value="es">ES 🇪🇸</option>
+                <option value="de">DE 🇩🇪</option>
+                <option value="fr">FR 🇫🇷</option>
+                <option value="ar">AR 🇸🇦</option>
+                <option value="pt">PT 🇧🇷</option>
+                <option value="ru">RU 🇷🇺</option>
+            </select>
+        </div>
     </header>
 
     <main>
-        <span class="sub-tag"><i class="fa-solid fa-bolt"></i> En Hızlı TikTok Video İndirici</span>
-        <h1>TikTok Videolarını<br>Filigransız MP4 Olarak İndir</h1>
-        <p class="desc">Herhangi bir TikTok bağlantısını aşağıya yapıştırın. Saniyeler içinde logosuz, yüksek kalitede video veya MP3 sesini ücretsiz indirin.</p>
+        <span class="sub-tag" id="subTag"><i class="fa-solid fa-bolt"></i> En Hızlı TikTok Video İndirici</span>
+        <h1 id="mainTitle">TikTok Videolarını<br>Filigransız MP4 Olarak İndir</h1>
+        <p class="desc" id="mainDesc">Herhangi bir TikTok bağlantısını aşağıya yapıştırın. Saniyeler içinde logosuz, yüksek kalitede video veya MP3 sesini ücretsiz indirin.</p>
 
         <!-- Input Alanı -->
         <div class="input-box">
             <form id="downloadForm" style="display: flex; width: 100%; gap: 10px;">
                 <input type="url" id="tiktokUrl" required placeholder="TikTok video bağlantısını buraya yapıştırın...">
-                <button type="button" id="pasteBtn" class="paste-btn"><i class="fa-regular fa-clipboard"></i> Yapıştır</button>
-                <button type="submit" class="submit-btn"><i class="fa-solid fa-arrow-down"></i> İndir</button>
+                <button type="button" id="pasteBtn" class="paste-btn"><i class="fa-regular fa-clipboard"></i> <span id="pasteTxt">Yapıştır</span></button>
+                <button type="submit" class="submit-btn" id="submitBtn"><i class="fa-solid fa-arrow-down"></i> <span id="downloadTxt">İndir</span></button>
             </form>
         </div>
 
@@ -305,8 +332,8 @@
                 <span id="authorName" class="author-tag">@kullanici</span>
                 <p id="videoTitle" class="video-title">Video Açıklaması</p>
                 <div class="btn-group">
-                    <a id="mp4Link" href="#" target="_blank" class="dl-btn mp4-btn"><i class="fa-solid fa-download"></i> Filigransız MP4</a>
-                    <a id="mp3Link" href="#" target="_blank" class="dl-btn mp3-btn"><i class="fa-solid fa-music"></i> Ses (MP3)</a>
+                    <a id="mp4Link" href="#" target="_blank" class="dl-btn mp4-btn"><i class="fa-solid fa-download"></i> <span id="mp4Txt">Filigransız MP4</span></a>
+                    <a id="mp3Link" href="#" target="_blank" class="dl-btn mp3-btn"><i class="fa-solid fa-music"></i> <span id="mp3Txt">Ses (MP3)</span></a>
                 </div>
             </div>
         </div>
@@ -315,29 +342,262 @@
         <div class="features">
             <div class="feature-card">
                 <i class="fa-solid fa-bolt"></i>
-                <h3>Işık Hızında</h3>
-                <p>Node.js altyapımız ile videolar saniyeler içinde hazırlanır.</p>
+                <h3 id="feat1Title">Işık Hızında</h3>
+                <p id="feat1Desc">Node.js altyapımız ile videolar saniyeler içinde hazırlanır.</p>
             </div>
             <div class="feature-card">
                 <i class="fa-solid fa-ban"></i>
-                <h3>Filigransız (No-WM)</h3>
-                <p>TikTok logosu ve kullanıcı adı olmadan temiz video indirin.</p>
+                <h3 id="feat2Title">Filigransız (No-WM)</h3>
+                <p id="feat2Desc">TikTok logosu ve kullanıcı adı olmadan temiz video indirin.</p>
             </div>
             <div class="feature-card">
                 <i class="fa-solid fa-shield-halved"></i>
-                <h3>%100 Güvenli & Ücretsiz</h3>
-                <p>Üyelik veya kayıt gerekmez. Sınırsız ücretsiz indirme imkanı.</p>
+                <h3 id="feat3Title">%100 Güvenli & Ücretsiz</h3>
+                <p id="feat3Desc">Üyelik veya kayıt gerekmez. Sınırsız ücretsiz indirme imkanı.</p>
             </div>
         </div>
     </main>
 
     <footer>
-        <p>TokSave.io • Tüm Hakları Saklıdır © 2026</p>
-        <p>Yasal Uyarı (Disclaimer): Bu web sitesinin TikTok veya ByteDance Ltd. ile hiçbir resmi bağı, ortaklığı veya sponsorluğu yoktur. Sitemiz sunucularında hiçbir video medya verisi barındırmaz ve depolamaz. Tüm medya içerikleri doğrudan TikTok sunucularından anlık olarak çekilir. Tüm telif hakları ilgili içerik sahibine aittir.</p>
+        <p id="footerRights">TokSave.io • Tüm Hakları Saklıdır © 2026</p>
+        <p id="footerDisclaimer">Yasal Uyarı (Disclaimer): Bu web sitesinin TikTok veya ByteDance Ltd. ile hiçbir resmi bağı, ortaklığı veya sponsorluğu yoktur. Sitemiz sunucularında hiçbir video medya verisi barındırmaz ve depolamaz. Tüm medya içerikleri doğrudan TikTok sunucularından anlık olarak çekilir. Tüm telif hakları ilgili içerik sahibine aittir.</p>
     </footer>
 
     <script>
-        // Senin canlı Render API adresin
+        // Çeviri Sözlüğü
+        const translations = {
+            tr: {
+                metaTitle: "TokSave.io - TikTok Videolarını Filigransız MP4 Olarak İndir",
+                apiBadge: '<i class="fa-solid fa-circle-check"></i> API Aktif',
+                subTag: '<i class="fa-solid fa-bolt"></i> En Hızlı TikTok Video İndirici',
+                mainTitle: "TikTok Videolarını<br>Filigransız MP4 Olarak İndir",
+                mainDesc: "Herhangi bir TikTok bağlantısını aşağıya yapıştırın. Saniyeler içinde logosuz, yüksek kalitede video veya MP3 sesini ücretsiz indirin.",
+                placeholder: "TikTok video bağlantısını buraya yapıştırın...",
+                pasteTxt: "Yapıştır",
+                downloadTxt: "İndir",
+                mp4Txt: "Filigransız MP4",
+                mp3Txt: "Ses (MP3)",
+                feat1Title: "Işık Hızında",
+                feat1Desc: "Node.js altyapımız ile videolar saniyeler içinde hazırlanır.",
+                feat2Title: "Filigransız (No-WM)",
+                feat2Desc: "TikTok logosu ve kullanıcı adı olmadan temiz video indirin.",
+                feat3Title: "%100 Güvenli & Ücretsiz",
+                feat3Desc: "Üyelik veya kayıt gerekmez. Sınırsız ücretsiz indirme imkanı.",
+                footerRights: "TokSave.io • Tüm Hakları Saklıdır © 2026",
+                footerDisclaimer: "Yasal Uyarı: Bu web sitesinin TikTok veya ByteDance Ltd. ile hiçbir resmi bağı yoktur. Sitemiz sunucularında hiçbir video barındırmaz.",
+                pasteError: "Panodan okuma izni alınamadı.",
+                apiError: "Video bilgileri çekilemedi usta."
+            },
+            en: {
+                metaTitle: "TokSave.io - Download TikTok Videos Without Watermark MP4",
+                apiBadge: '<i class="fa-solid fa-circle-check"></i> API Active',
+                subTag: '<i class="fa-solid fa-bolt"></i> Fastest TikTok Video Downloader',
+                mainTitle: "Download TikTok Videos<br>Without Watermark MP4",
+                mainDesc: "Paste any TikTok link below. Download high-quality watermark-free video or MP3 audio in seconds for free.",
+                placeholder: "Paste TikTok video link here...",
+                pasteTxt: "Paste",
+                downloadTxt: "Download",
+                mp4Txt: "No Watermark MP4",
+                mp3Txt: "Audio (MP3)",
+                feat1Title: "Lightning Fast",
+                feat1Desc: "Videos are processed in seconds with our high-speed servers.",
+                feat2Title: "No Watermark",
+                feat2Desc: "Download clean videos without TikTok logo or username.",
+                feat3Title: "100% Free & Safe",
+                feat3Desc: "No registration required. Unlimited free downloads.",
+                footerRights: "TokSave.io • All Rights Reserved © 2026",
+                footerDisclaimer: "Disclaimer: This site is not affiliated with TikTok or ByteDance Ltd. We do not host any media on our servers.",
+                pasteError: "Clipboard access denied.",
+                apiError: "Failed to fetch video data."
+            },
+            es: {
+                metaTitle: "TokSave.io - Descargar Videos de TikTok Sin Marca de Agua",
+                apiBadge: '<i class="fa-solid fa-circle-check"></i> API Activa',
+                subTag: '<i class="fa-solid fa-bolt"></i> El Descargador Más Rápido de TikTok',
+                mainTitle: "Descargar Videos de TikTok<br>Sin Marca de Agua en MP4",
+                mainDesc: "Pega cualquier enlace de TikTok a continuación. Descarga videos de alta calidad o audio MP3 gratis en segundos.",
+                placeholder: "Pega el enlace del video de TikTok aquí...",
+                pasteTxt: "Pegar",
+                downloadTxt: "Descargar",
+                mp4Txt: "MP4 Sin Marca",
+                mp3Txt: "Audio (MP3)",
+                feat1Title: "Ultrarrápido",
+                feat1Desc: "Los videos se procesan en segundos en nuestros servidores.",
+                feat2Title: "Sin Marca de Agua",
+                feat2Desc: "Descarga videos limpios sin logotipo ni nombre de usuario.",
+                feat3Title: "100% Gratis y Seguro",
+                feat3Desc: "Sin registro. Descargas gratuitas e ilimitadas.",
+                footerRights: "TokSave.io • Todos los derechos reservados © 2026",
+                footerDisclaimer: "Aviso legal: Este sitio no está afiliado a TikTok ni a ByteDance Ltd.",
+                pasteError: "Permiso de portapapeles denegado.",
+                apiError: "Error al obtener datos del video."
+            },
+            de: {
+                metaTitle: "TokSave.io - TikTok Videos ohne Wasserzeichen herunterladen",
+                apiBadge: '<i class="fa-solid fa-circle-check"></i> API Aktiv',
+                subTag: '<i class="fa-solid fa-bolt"></i> Schnellster TikTok Downloader',
+                mainTitle: "TikTok Videos ohne<br>Wasserzeichen als MP4 herunterladen",
+                mainDesc: "Fügen Sie unten einen TikTok-Link ein. Laden Sie Videos ohne Wasserzeichen oder MP3-Audio kostenlos herunter.",
+                placeholder: "TikTok-Videolink hier einfügen...",
+                pasteTxt: "Einfügen",
+                downloadTxt: "Download",
+                mp4Txt: "MP4 ohne Wasserzeichen",
+                mp3Txt: "Audio (MP3)",
+                feat1Title: "Blitzschnell",
+                feat1Desc: "Videos werden in Sekundenschnelle auf unseren Servern verarbeitet.",
+                feat2Title: "Ohne Wasserzeichen",
+                feat2Desc: "Laden Sie saubere Videos ohne TikTok-Logo herunter.",
+                feat3Title: "100% Kostenlos & Sicher",
+                feat3Desc: "Keine Registrierung erforderlich. Unbegrenzte Downloads.",
+                footerRights: "TokSave.io • Alle Rechte vorbehalten © 2026",
+                footerDisclaimer: "Haftungsausschluss: Diese Website steht in keiner Verbindung zu TikTok oder ByteDance Ltd.",
+                pasteError: "Zugriff auf Zwischenablage verweigert.",
+                apiError: "Videodaten konnten nicht abgerufen werden."
+            },
+            fr: {
+                metaTitle: "TokSave.io - Télécharger Vidéos TikTok Sans Filigrane MP4",
+                apiBadge: '<i class="fa-solid fa-circle-check"></i> API Active',
+                subTag: '<i class="fa-solid fa-bolt"></i> Téléchargeur TikTok Le Plus Rapide',
+                mainTitle: "Télécharger Vidéos TikTok<br>Sans Filigrane en MP4",
+                mainDesc: "Collez n'importe quel lien TikTok ci-dessous. Téléchargez gratuitement des vidéos sans filigrane ou de la musique MP3.",
+                placeholder: "Collez le lien de la vidéo TikTok ici...",
+                pasteTxt: "Coller",
+                downloadTxt: "Télécharger",
+                mp4Txt: "MP4 Sans Filigrane",
+                mp3Txt: "Audio (MP3)",
+                feat1Title: "Ultra Rapide",
+                feat1Desc: "Les vidéos sont traitées en quelques secondes sur nos serveurs.",
+                feat2Title: "Sans Filigrane",
+                feat2Desc: "Téléchargez des vidéos propres sans logo TikTok.",
+                feat3Title: "100% Gratuit & Sûr",
+                feat3Desc: "Inscription non requise. Téléchargements illimités.",
+                footerRights: "TokSave.io • Tous droits réservés © 2026",
+                footerDisclaimer: "Avertissement : Ce site n'est pas affilié à TikTok ou ByteDance Ltd.",
+                pasteError: "Accès au presse-papiers refusé.",
+                apiError: "Échec de la récupération des données vidéo."
+            },
+            ar: {
+                metaTitle: "TokSave.io - تحميل فيديوهات تيك توك بدون علامة مائية MP4",
+                apiBadge: '<i class="fa-solid fa-circle-check"></i> API نشط',
+                subTag: '<i class="fa-solid fa-bolt"></i> أسرع أداة تحميل تيك توك',
+                mainTitle: "تحميل فيديوهات تيك توك<br>بدون علامة مائية MP4",
+                mainDesc: "الصق أي رابط تيك توك أدناه. قم بتحميل فيديو عال الجودة بدون علامة مائية أو ملف MP3 مجاناً.",
+                placeholder: "الصق رابط فيديو تيك توك هنا...",
+                pasteTxt: "لصق",
+                downloadTxt: "تحميل",
+                mp4Txt: "MP4 بدون علامة مائية",
+                mp3Txt: "صوت (MP3)",
+                feat1Title: "سريع كالبرق",
+                feat1Desc: "تتم معالجة الفيديوهات في ثوانٍ معدودة.",
+                feat2Title: "بدون علامة مائية",
+                feat2Desc: "قم بتحميل فيديوهات نظيفة بدون شعار تيك توك.",
+                feat3Title: "مجاني وآمن 100%",
+                feat3Desc: "لا يتطلب التسجيل. تحميل مجاني غير محدود.",
+                footerRights: "TokSave.io • جميع الحقوق محفوظة © 2026",
+                footerDisclaimer: "إخلاء مسؤولية: هذا الموقع غير تابع لـ TikTok أو ByteDance Ltd.",
+                pasteError: "تم رفض الوصول إلى الحافظة.",
+                apiError: "فشل في جلب بيانات الفيديو."
+            },
+            pt: {
+                metaTitle: "TokSave.io - Baixar Vídeos do TikTok Sem Marca d'Água",
+                apiBadge: '<i class="fa-solid fa-circle-check"></i> API Ativa',
+                subTag: '<i class="fa-solid fa-bolt"></i> O Baixador de TikTok Mais Rápido',
+                mainTitle: "Baixar Vídeos do TikTok<br>Sem Marca d'Água em MP4",
+                mainDesc: "Cole qualquer link do TikTok abaixo. Baixe vídeos em alta qualidade sem marca d'água ou áudio MP3 de graça.",
+                placeholder: "Cole o link do vídeo do TikTok aqui...",
+                pasteTxt: "Colar",
+                downloadTxt: "Baixar",
+                mp4Txt: "MP4 Sem Marca",
+                mp3Txt: "Áudio (MP3)",
+                feat1Title: "Super Rápido",
+                feat1Desc: "Os vídeos são processados em segundos nos nossos servidores.",
+                feat2Title: "Sem Marca d'Água",
+                feat2Desc: "Baixe vídeos limpos sem a logo do TikTok.",
+                feat3Title: "100% Grátis e Seguro",
+                feat3Desc: "Sem necessidade de cadastro. Downloads ilimitados.",
+                footerRights: "TokSave.io • Todos os direitos reservados © 2026",
+                footerDisclaimer: "Aviso legal: Este site não é afiliado ao TikTok ou ByteDance Ltd.",
+                pasteError: "Acesso à área de transferência negado.",
+                apiError: "Falha ao obter dados do vídeo."
+            },
+            ru: {
+                metaTitle: "TokSave.io - Скачать видео TikTok без водяного знака MP4",
+                apiBadge: '<i class="fa-solid fa-circle-check"></i> API Активен',
+                subTag: '<i class="fa-solid fa-bolt"></i> Самый быстрый загрузчик TikTok',
+                mainTitle: "Скачать видео TikTok<br>без водяного знака MP4",
+                mainDesc: "Вставьте ссылку на TikTok ниже. Скачивайте видео высокого качества без логотипа или MP3 бесплатно.",
+                placeholder: "Вставьте ссылку на видео TikTok...",
+                pasteTxt: "Вставить",
+                downloadTxt: "Скачать",
+                mp4Txt: "MP4 без логотипа",
+                mp3Txt: "Аудио (MP3)",
+                feat1Title: "Молниеносно",
+                feat1Desc: "Видео обрабатывается за считанные секунды на наших серверах.",
+                feat2Title: "Без водяных знаков",
+                feat2Desc: "Скачивайте чистые видео без логотипа TikTok.",
+                feat3Title: "100% Бесплатно и Безопасно",
+                feat3Desc: "Регистрация не требуется. Неограниченные скачивания.",
+                footerRights: "TokSave.io • Все права защищены © 2026",
+                footerDisclaimer: "Отказ от ответственности: Этот сайт не связан с TikTok или ByteDance Ltd.",
+                pasteError: "Доступ к буферу обмена запрещен.",
+                apiError: "Не удалось получить данные видео."
+            }
+        };
+
+        const langSelect = document.getElementById('langSelect');
+        let currentLang = 'en'; // Varsayılan global dil
+
+        function setLanguage(lang) {
+            if (!translations[lang]) lang = 'en';
+            currentLang = lang;
+            const t = translations[lang];
+
+            document.getElementById('metaTitle').innerText = t.metaTitle;
+            document.getElementById('apiBadge').innerHTML = t.apiBadge;
+            document.getElementById('subTag').innerHTML = t.subTag;
+            document.getElementById('mainTitle').innerHTML = t.mainTitle;
+            document.getElementById('mainDesc').innerText = t.mainDesc;
+            document.getElementById('tiktokUrl').placeholder = t.placeholder;
+            document.getElementById('pasteTxt').innerText = t.pasteTxt;
+            document.getElementById('downloadTxt').innerText = t.downloadTxt;
+            document.getElementById('mp4Txt').innerText = t.mp4Txt;
+            document.getElementById('mp3Txt').innerText = t.mp3Txt;
+            document.getElementById('feat1Title').innerText = t.feat1Title;
+            document.getElementById('feat1Desc').innerText = t.feat1Desc;
+            document.getElementById('feat2Title').innerText = t.feat2Title;
+            document.getElementById('feat2Desc').innerText = t.feat2Desc;
+            document.getElementById('feat3Title').innerText = t.feat3Title;
+            document.getElementById('feat3Desc').innerText = t.feat3Desc;
+            document.getElementById('footerRights').innerText = t.footerRights;
+            document.getElementById('footerDisclaimer').innerText = t.footerDisclaimer;
+
+            langSelect.value = lang;
+            localStorage.setItem('toksave_lang', lang);
+        }
+
+        // Otomatik Tarayıcı Dili Algılama
+        function detectLanguage() {
+            const savedLang = localStorage.getItem('toksave_lang');
+            if (savedLang && translations[savedLang]) {
+                setLanguage(savedLang);
+                return;
+            }
+            const userLang = (navigator.language || navigator.userLanguage || '').substring(0, 2);
+            if (translations[userLang]) {
+                setLanguage(userLang);
+            } else {
+                setLanguage('en');
+            }
+        }
+
+        langSelect.addEventListener('change', (e) => {
+            setLanguage(e.target.value);
+        });
+
+        // Sayfa yüklendiğinde dili ayarla
+        detectLanguage();
+
+        // API İşlemleri
         const API_URL = 'https://tiktokapi-ghsj.onrender.com/api/download';
 
         const downloadForm = document.getElementById('downloadForm');
@@ -353,7 +613,7 @@
                 const text = await navigator.clipboard.readText();
                 tiktokUrlInput.value = text;
             } catch (err) {
-                alert('Panodan okuma izni alınamadı.');
+                alert(translations[currentLang].pasteError);
             }
         });
 
@@ -376,17 +636,17 @@
 
                     document.getElementById('videoCover').src = data.cover || data.origin_cover || '';
                     document.getElementById('authorName').innerText = data.author?.nickname ? `@${data.author.unique_id}` : '@tiktok_user';
-                    document.getElementById('videoTitle').innerText = data.title || 'TikTok Videosu';
+                    document.getElementById('videoTitle').innerText = data.title || 'TikTok Video';
                     
                     document.getElementById('mp4Link').href = data.play; 
                     document.getElementById('mp3Link').href = data.music; 
 
                     resultCard.classList.remove('hidden');
                 } else {
-                    throw new Error(jsonRes.msg || 'Video bilgileri çekilemedi usta.');
+                    throw new Error(jsonRes.msg || translations[currentLang].apiError);
                 }
             } catch (err) {
-                errorMsg.innerText = 'Hata: ' + (err.message || 'Sunucuya ulaşılamadı.');
+                errorMsg.innerText = 'Hata: ' + (err.message || translations[currentLang].apiError);
                 errorMsg.classList.remove('hidden');
             } finally {
                 loader.classList.add('hidden');
