@@ -341,7 +341,7 @@
             <div class="feature-card">
                 <i class="fa-solid fa-bolt"></i>
                 <h3 id="feat1Title">Işık Hızında</h3>
-                <p id="feat1Desc">Node.js altyapımız ile videolar saniyeler içinde hazırlanır.</p>
+                <p id="feat1Desc">Doğrudan altyapımız ile videolar saniyeler içinde hazırlanır.</p>
             </div>
             <div class="feature-card">
                 <i class="fa-solid fa-ban"></i>
@@ -358,7 +358,7 @@
 
     <footer>
         <p id="footerRights">TokSave.io • Tüm Hakları Saklıdır © 2026</p>
-        <p id="footerDisclaimer">Yasal Uyarı (Disclaimer): Bu web sitesinin TikTok veya ByteDance Ltd. ile hiçbir resmi bağı, ortaklığı veya sponsorluğu yoktur. Sitemiz sunucularında hiçbir video medya verisi barındırmaz ve depolamaz.</p>
+        <p id="footerDisclaimer">Yasal Uyarı (Disclaimer): Bu web sitesinin TikTok veya ByteDance Ltd. ile hiçbir resmi bağı yoktur. Sitemiz sunucularında hiçbir video barındırmaz.</p>
     </footer>
 
     <script>
@@ -375,7 +375,7 @@
                 mp4Txt: "Filigransız MP4",
                 mp3Txt: "Ses (MP3)",
                 feat1Title: "Işık Hızında",
-                feat1Desc: "Node.js altyapımız ile videolar saniyeler içinde hazırlanır.",
+                feat1Desc: "Doğrudan altyapımız ile videolar saniyeler içinde hazırlanır.",
                 feat2Title: "Filigransız (No-WM)",
                 feat2Desc: "TikTok logosu ve kullanıcı adı olmadan temiz video indirin.",
                 feat3Title: "%100 Güvenli & Ücretsiz",
@@ -460,9 +460,6 @@
 
         detectLanguage();
 
-        // API İşlemleri & Kısa Link Çözücü
-        const API_URL = 'https://tiktokapi-ghsj.onrender.com/api/download';
-
         const downloadForm = document.getElementById('downloadForm');
         const tiktokUrlInput = document.getElementById('tiktokUrl');
         const pasteBtn = document.getElementById('pasteBtn');
@@ -479,7 +476,7 @@
             }
         });
 
-        // Tarayıcı üzerinden vt.tiktok.com kısa linkini çözen akıllı fonksiyon
+        // Kısa linkleri tarayıcı üzerinden çözen fonksiyon
         async function resolveShortUrl(inputUrl) {
             if (!inputUrl.includes('vt.tiktok.com') && !inputUrl.includes('vm.tiktok.com')) {
                 return inputUrl;
@@ -502,11 +499,12 @@
             loader.classList.remove('hidden');
 
             try {
-                // Kısa linkse önce tarayıcıda uzun hale getir, sonra backend'e yolla
+                // 1. Kısa linkse tarayıcıda uzun hale getir
                 const resolvedUrl = await resolveShortUrl(rawUrl);
-                console.log("İşlenen Uzun URL:", resolvedUrl);
 
-                const response = await fetch(`${API_URL}?url=${encodeURIComponent(resolvedUrl)}`);
+                // 2. Doğrudan tarayıcıdan TikWM API'sine bağlan (CORS ve Render engelini tamamen atla)
+                const targetApi = `https://www.tikwm.com/api/?url=${encodeURIComponent(resolvedUrl)}&hd=1`;
+                const response = await fetch(targetApi);
                 const jsonRes = await response.json();
 
                 if (jsonRes && jsonRes.code === 0 && jsonRes.data) {
